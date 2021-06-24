@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Othello</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+      .board { background: #46cb1b; width:50px; height:50px; border: 1px solid #000;}
+    </style>
+  </head>
+  <body>
+
+    <div id="app">
+      
+      <!--Square for a board-->
+      <div v-bind:class="board"></div>
+
+    </div>
+
+    <script>
+      var app = new Vue({
+        el: '#app', 
+        data: { 
+          board: 'board',
+        }
+      })
+    </script>
+  </body>
+</html>

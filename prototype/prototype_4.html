@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Othello</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+      #flex{ display:flex; flex-wrap: wrap; width: 420px; }
+      .board-style{background: #46cb1b; width:50px; height:50px; border: 1px solid #000;}
+    </style>
+  </head>
+  <body>
+
+    <div id="app">
+      
+      <!--board-->
+      <div id="flex">
+        <!--display 64 squares to create a board-->
+        <div v-for="(square, index) in generateBoard.length" v-bind:class="board" v-bind:id="index"></div>
+      </div>
+    </div>
+
+    <script>
+      var app = new Vue({
+        el: '#app', 
+        data: { 
+          board: 'board-style',
+          squares: [],
+        },
+        computed: {
+          /*generate 64 squares to create a board*/  
+          generateBoard: function(){
+            for(var i = 0; i < 64; i++){
+              this.squares.push(i)
+            }
+            return this.squares
+          }
+        },
+      })
+    </script>
+  </body>
+</html>

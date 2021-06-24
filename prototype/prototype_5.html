@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Othello</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+      #flex{ display:flex; flex-wrap: wrap; width: 420px; }
+      .board-style{background: #46cb1b; width:50px; height:50px; border: 1px solid #000;}
+      .black-style {background:#000; width:45px; height:45px; border:1px solid #000; border-radius:50%; margin-top:3.5%; margin-left:3%; display:block;}
+      .white-style {background:#fff; width:45px; height:45px; border:1px solid #000; border-radius:50%; margin-top:3.5%; margin-left:3%; display:block;}
+    </style>
+  </head>
+  <body>
+
+    <div id="app">
+      
+      <!--board-->
+      <div id="flex">
+        <!--display 64 squares to create a board-->
+        <div v-for="(square, index) in generateBoard.length" 
+             v-bind:class="board"
+             v-bind:id="index"
+             v-on:click="onclick(index);">
+          <!--display first 4 stones on the board-->
+          <span v-if="index == 27" v-bind:class="black"></span>
+          <span v-if="index == 28" v-bind:class="white"></span>
+          <span v-if="index == 35" v-bind:class="white"></span>
+          <span v-if="index == 36" v-bind:class="black"></span>
+          <!--add stone if isSelected is true and selectedSquare contains selected index number-->
+          <span v-if="isSelected && selectedSquare.includes(index)" v-bind:class="black"></span> 
+        </div>
+      </div>
+
+    </div>
+
+    <script>
+      var app = new Vue({
+        el: '#app', 
+        data: { 
+          board: 'board-style',
+          black: 'black-style',
+          white: 'white-style',
+          squares: [],
+          selectedSquare: [],
+          isSelected: false,
+        },
+        computed: {
+          generateBoard: function(){
+            for(var i = 0; i < 64; i++){
+              this.squares.push(i)
+            }
+            return this.squares
+          }
+        },
+        methods: {
+          onclick: function(index){
+            this.selectedSquare.push(index)
+            this.isSelected = true
+            console.log(this.selectedSquare)
+          },
+        },
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Othello</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+      #flex{display:flex; flex-wrap:wrap; width:420px;}
+      .board-style{background:#46cb1b; width:50px; height:50px; border:1px solid #000;}
+      .black-style{background:#000; width:45px; height:45px; border:1px solid #000; border-radius:50%; margin-top:3.5%; margin-left:3%; display:block;}
+      .white-style{background:#fff; width:45px; height:45px; border:1px solid #000; border-radius:50%; margin-top:3.5%; margin-left:3%; display:block;}
+      #toggle-button{margin-top:5%;}
+      .button{background:#75816b; border:1px solid #75816b; border-radius:5px;padding:5px; cursor:pointer; color:#fff;}
+      input[type="radio"]{display:none;}
+      @media only screen and (max-width: 730px) {
+        body {
+          background-color: lightblue;
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="app">
+      
+      <!--board-->
+      <board></board>
+
+      <!--Toggle button-->
+      <toggle-button></toggle-button>
+
+    </div>
+
+    <script>
+      var EventBus = new Vue();
+
+      Vue.component('board', {
+        template: `<div id="flex">
+                    <!--display 64 squares to create a board-->
+                    <div v-for="(square, index) in generateBoard.length" 
+                        v-bind:class="board"
+                        v-bind:id="index"
+                        v-on:click="onclick(index);">
+                    <!--display first 4 stones on the board-->
+                    <span v-if="index == 27" v-bind:class="black"></span>
+                    <span v-if="index == 28" v-bind:class="white"></span>
+                    <span v-if="index == 35" v-bind:class="white"></span>
+                    <span v-if="index == 36" v-bind:class="black"></span>
+                    <!--add black/white stone if isSelected is true and blackStone/whiteStone contains selected index number-->
+                    <span v-if="isBlack && blackStone.includes(index)" v-bind:class="black"></span> 
+                    <span v-if="isWhite && whiteStone.includes(index)" v-bind:class="white"></span> 
+                    </div>
+                    <p>this is the stone: {{stone}}</p>
+                  </div>`,
+        data: function() {
+          return { 
+            board: 'board-style',
+            black: 'black-style',
+            white: 'white-style',
+            squares: [],
+            blackStone: [],
+            whiteStone: [],
+            isBlack: false,
+            isWhite: false,
+            stone: null,
+          }
+        },
+        computed: {
+          generateBoard: function(){
+            for(var i = 0; i < 64; i++){
+              this.squares.push(i)
+            }
+            return this.squares
+          }
+        },
+        methods: {
+          onclick: function(index){
+            console.log(this.blackStone)
+            console.log(this.isWhite)
+
+            /*if black is selected*/ 
+            if(this.stone === 'black'){
+              if(this.whiteStone.includes(index)){
+                alert("Please pick other location")
+              } else {
+
+                /*if there is no the same index number in the blackStone array, add the index number to the array, send the index deta, make isBlack true*/
+                /*otherwise alert a message*/
+                if(!this.blackStone.includes(index)){
+                  this.blackStone.push(index)
+                  this.isBlack = true
+                } else {
+                  alert("This location is already picked")
+                }
+              }
+
+            /*if white is selected*/  
+            } else if (this.stone === 'white'){
+              if(this.blackStone.includes(index)){
+                alert("Please pick other location")
+              } else {
+
+                /*if there is no the same index number in the whiteStone array, add the index number to the array, send the index deta, make isBlack true*/
+                /*otherwise alert a message*/
+                if(!this.whiteStone.includes(index)){
+                  this.whiteStone.push(index)
+                  this.isWhite = true
+                } else {
+                  alert("This location is already picked")
+                }
+              }
+            }
+          },
+        },
+        mounted() {   
+          EventBus.$on("btn-click", (data) => {
+            console.log(data)
+            this.stone = data
+          })
+        },  
+      }),
+
+      Vue.component('toggle-button', {
+        template: `<div id="toggle-button">
+                    <label for="black" class="button">Black</label>
+                    <input type="radio" id="black" name="stone" value="black" v-model="stone" v-on:change="onBtnClick();" >
+
+                    <label for="white" class="button">White</label>
+                    <input type="radio" id="white" name="stone" value="white" v-model="stone" v-on:change="onBtnClick();">
+
+                    <p>The selected colour is: {{stone}}</p>
+                  </div>`,
+        data: function(){
+          return {
+            stone: null,
+            black: 'black-style',
+            white: 'white-style',
+          }
+        },
+        methods: {
+          onBtnClick: function(){
+            EventBus.$emit('btn-click', this.stone)
+          }
+        },
+      })
+  
+      var app = new Vue({
+        el: '#app', 
+      })
+    </script>
+  </body>
+</html>

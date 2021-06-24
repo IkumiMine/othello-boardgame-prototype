@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Othello</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+      .black {background:#000; width:45px; height:45px; border:1px solid #000; border-radius:50%;}
+      .white {background:#fff; width:45px; height:45px; border:1px solid #000; border-radius:50%;}
+    </style>
+  </head>
+  <body>
+
+    <div id="app">
+
+      <!--pieces-->
+      <!--
+        display each element if isBlack/isWhite is true
+      -->
+      <div v-bind:class="{black:isBlack}"></div>
+      <div v-bind:class="{white:isWhite}"></div>
+
+    </div>
+
+    <script>
+      var app = new Vue({
+        el: '#app', 
+        data: { 
+          isBlack: false,
+          isWhite: true,
+        }
+      })
+    </script>
+  </body>
+</html>

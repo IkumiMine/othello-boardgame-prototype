@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Othello</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+
+    <div id="app">
+
+      <!--Board game title--> 
+      <h1>{{title}}</h1>
+      <p>Your color is {{color}}.</p>
+    </div>
+
+    <script>
+      var app = new Vue({
+        el: '#app', 
+        data: { 
+          title: 'Othello',
+          color: 'Black'
+        }
+      })
+    </script>
+  </body>
+</html>

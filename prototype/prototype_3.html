@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Othello</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+      <!--input[type="radio"] { display: none; }-->
+      .button {background:#75816b; border:1px solid #75816b; border-radius:5px;padding:5px; cursor:pointer; color:#fff;}
+      .black-style {background:#000; width:45px; height:45px; border:1px solid #000; border-radius:50%; margin-top:5%;}
+      .white-style {background:#fff; width:45px; height:45px; border:1px solid #000; border-radius:50%; margin-top:5%;}
+    </style>
+  </head>
+  <body>
+
+    <div id="app">
+      <div>
+        <label for="black" class="button">Black</label>
+        <input type="radio" id="black" name="piece" value="black" v-model="piece">
+
+        <label for="white" class="button">White</label>
+        <input type="radio" id="white" name="piece" value="white" v-model="piece">
+      </div>
+
+      <!--pieces
+      toggle div based on the radio button value
+      -->
+      <div v-if="piece === 'black'" v-bind:class="black"></div>
+      <div v-if="piece === 'white'" v-bind:class="white"></div>
+      
+      <span>The selected color is: {{piece}}</span>
+
+    </div>
+
+    <script>
+      var app = new Vue({
+        el: '#app', 
+        data: { 
+          piece: 'black',
+          black: 'black-style',
+          white: 'white-style',
+        },
+      })
+    </script>
+  </body>
+</html>
